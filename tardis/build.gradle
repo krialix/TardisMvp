@@ -10,8 +10,8 @@ ext {
 
     libraryDescription = 'A MVP library implementation'
 
-    siteUrl = 'https://github.com/krialix/Tardis'
-    gitUrl = 'https://github.com/krialix/Tardis.git'
+    siteUrl = 'https://github.com/krialix/TardisMvp'
+    gitUrl = 'https://github.com/krialix/TardisMvp.git'
 
     libraryVersion = '0.1.0'
 

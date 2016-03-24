@@ -17,7 +17,7 @@
 package com.krialix.tardis;
 
 /**
- * The base implementation of {@link Presenter<V>}
+ * The base implementation of {@link Presenter}
  *
  * @param <V> MvpView
  */

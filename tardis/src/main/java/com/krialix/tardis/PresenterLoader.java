@@ -22,7 +22,7 @@ import android.content.Context;
 import android.support.v4.content.Loader;
 
 /**
- * The core class which handles of all {@link Presenter<V>} lifecycle.
+ * The core class which handles of all {@link Presenter} lifecycle.
  *
  * @param <V> MvpView
  * @param <P> Presenter

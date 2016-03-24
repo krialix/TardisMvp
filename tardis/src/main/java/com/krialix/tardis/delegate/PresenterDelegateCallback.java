@@ -18,25 +18,24 @@ package com.krialix.tardis.delegate;
 
 import com.krialix.tardis.MvpView;
 import com.krialix.tardis.Presenter;
-import com.krialix.tardis.PresenterFactory;
 
 import android.support.annotation.NonNull;
 
 /**
  * The interface Presenter delegate callback.
  *
- * @param <V> the type parameter
- * @param <P> the type parameter
+ * @param <V> MvpView
+ * @param <P> Presenter
  */
 public interface PresenterDelegateCallback<V extends MvpView, P extends Presenter<V>> {
 
     /**
-     * Gets presenter factory.
+     * Create presenter p.
      *
-     * @return the presenter factory
+     * @return the p
      */
     @NonNull
-    PresenterFactory<P> getPresenterFactory();
+    P createPresenter();
 
     /**
      * On presenter ready.

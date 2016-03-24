@@ -17,6 +17,7 @@
 package com.krialix.tardis;
 
 import com.krialix.tardis.delegate.ActivityPresenterDelegate;
+import com.krialix.tardis.delegate.ActivityPresenterDelegateImpl;
 import com.krialix.tardis.delegate.PresenterDelegateCallback;
 
 import android.os.Bundle;
@@ -25,36 +26,60 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * The type Mvp activity.
+ * The base class for activities that want to implement Mvp.
  *
- * @param <V> the type parameter
- * @param <P> the type parameter
+ * @param <V> MvpView
+ * @param <P> Presenter
  */
-public abstract class MvpActivity<V extends MvpView, P extends Presenter<V>>
-        extends AppCompatActivity
+public abstract class MvpActivity<V extends MvpView, P extends Presenter<V>> extends AppCompatActivity
         implements PresenterDelegateCallback<V, P> {
 
     private static final int LOADER_ID = 101;
-    private ActivityPresenterDelegate<V, P> mDelegate =
-            new ActivityPresenterDelegate<>(this /* Callback */, this /* Activity */, LOADER_ID);
+    private ActivityPresenterDelegate<V, P> mDelegate;
+    private P mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mDelegate.onCreate();
+        getMvpDelegate().onCreate();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         // Presenter will ready to use for activity
-        mDelegate.onStart();
+        getMvpDelegate().onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mDelegate.onStop();
+        getMvpDelegate().onStop();
+    }
+
+    /**
+     * @return The {@link ActivityPresenterDelegateImpl} being used by this Activity.
+     */
+    @NonNull
+    protected ActivityPresenterDelegate<V, P> getMvpDelegate() {
+        if (mDelegate == null) {
+            mDelegate = new ActivityPresenterDelegateImpl<>(this /* Activity */, LOADER_ID, this /* Callback */);
+        }
+        return mDelegate;
+    }
+
+    /**
+     * Returns current presenter.
+     *
+     * @return the presenter
+     */
+    protected P getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    public void onPresenterReady(P presenter) {
+        mPresenter = presenter;
     }
 
     // If Activity doesn't implement Presenter<View> interface, override this.

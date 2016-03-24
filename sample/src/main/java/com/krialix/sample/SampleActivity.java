@@ -24,9 +24,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.krialix.sample.presenter.SamplePresenter;
-import com.krialix.sample.presenter.SamplePresenterFactory;
+import com.krialix.sample.presenter.SamplePresenterImpl;
 import com.krialix.tardis.MvpActivity;
-import com.krialix.tardis.PresenterFactory;
 
 public class SampleActivity extends MvpActivity<SampleView, SamplePresenter>
         implements SampleView {
@@ -34,8 +33,6 @@ public class SampleActivity extends MvpActivity<SampleView, SamplePresenter>
     private static final String TAG = "SampleActivity";
 
     private TextView mListTextView;
-
-    private SamplePresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +49,7 @@ public class SampleActivity extends MvpActivity<SampleView, SamplePresenter>
             testBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mPresenter.onTest("Atölye 15!!!!");
+                    getPresenter().onTest("Atölye 15!!!!");
                 }
             });
         }
@@ -66,14 +63,8 @@ public class SampleActivity extends MvpActivity<SampleView, SamplePresenter>
 
     @NonNull
     @Override
-    public PresenterFactory<SamplePresenter> getPresenterFactory() {
-        return new SamplePresenterFactory();
-    }
-
-    @Override
-    public void onPresenterReady(SamplePresenter presenter) {
-        mPresenter = presenter;
-        Log.i(TAG, "onPresenterReady: ");
+    public SamplePresenter createPresenter() {
+        return new SamplePresenterImpl();
     }
 
     @Override

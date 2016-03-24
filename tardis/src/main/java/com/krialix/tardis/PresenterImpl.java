@@ -17,9 +17,9 @@
 package com.krialix.tardis;
 
 /**
- * The type Presenter.
+ * The base implementation of {@link Presenter<V>}
  *
- * @param <V> the type parameter
+ * @param <V> MvpView
  */
 public abstract class PresenterImpl<V extends MvpView> implements Presenter<V> {
 
@@ -38,7 +38,7 @@ public abstract class PresenterImpl<V extends MvpView> implements Presenter<V> {
     }
 
     /**
-     * Gets view.
+     * Returns current view.
      *
      * @return the view
      */

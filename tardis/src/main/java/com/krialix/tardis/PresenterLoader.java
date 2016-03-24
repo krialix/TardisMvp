@@ -16,28 +16,31 @@
 
 package com.krialix.tardis;
 
+import com.krialix.tardis.delegate.PresenterDelegateCallback;
+
 import android.content.Context;
 import android.support.v4.content.Loader;
 
 /**
- * The type Presenter loader.
+ * The core class which handles of all {@link Presenter<V>} lifecycle.
  *
- * @param <P> the type parameter
+ * @param <V> MvpView
+ * @param <P> Presenter
  */
-public class PresenterLoader<P extends Presenter> extends Loader<P> {
+public class PresenterLoader<V extends MvpView, P extends Presenter<V>> extends Loader<P> {
 
-    private final PresenterFactory<P> mFactory;
+    private final PresenterDelegateCallback<V, P> mCallback;
     private P mPresenter;
 
     /**
      * Instantiates a new Presenter loader.
      *
-     * @param context the context
-     * @param factory the factory
+     * @param context  the context
+     * @param callback the callback
      */
-    public PresenterLoader(Context context, PresenterFactory<P> factory) {
+    public PresenterLoader(Context context, PresenterDelegateCallback<V, P> callback) {
         super(context);
-        mFactory = factory;
+        mCallback = callback;
     }
 
     @Override
@@ -58,8 +61,8 @@ public class PresenterLoader<P extends Presenter> extends Loader<P> {
     protected void onForceLoad() {
         super.onForceLoad();
 
-        // Create a presenter using the Factory.
-        mPresenter = mFactory.createPresenter();
+        // Create a presenter
+        mPresenter = mCallback.createPresenter();
 
         // Deliver result
         deliverResult(mPresenter);

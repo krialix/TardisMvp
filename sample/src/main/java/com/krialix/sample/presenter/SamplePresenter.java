@@ -16,8 +16,8 @@
 
 package com.krialix.sample.presenter;
 
-import com.krialix.tardis.Presenter;
 import com.krialix.sample.SampleView;
+import com.krialix.tardis.Presenter;
 
 public interface SamplePresenter extends Presenter<SampleView> {
     void onTest(String text);

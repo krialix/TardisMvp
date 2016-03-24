@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/krialix/TardisMvp'
     gitUrl = 'https://github.com/krialix/TardisMvp.git'
 
-    libraryVersion = '0.1.0'
+    libraryVersion = '1.0.0'
 
     developerId = 'krialix'
     developerName = 'Yasin Sinan Kayacan'

@@ -17,6 +17,7 @@
 package com.krialix.tardis;
 
 import com.krialix.tardis.delegate.FragmentPresenterDelegate;
+import com.krialix.tardis.delegate.FragmentPresenterDelegateImpl;
 import com.krialix.tardis.delegate.PresenterDelegateCallback;
 
 import android.os.Bundle;
@@ -25,28 +26,53 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 /**
- * The type Mvp fragment.
+ * The base class for fragments that want to implement Mvp.
  *
- * @param <V> the type parameter
- * @param <P> the type parameter
+ * @param <V> MvpView
+ * @param <P> Presenter
  */
 public abstract class MvpFragment<V extends MvpView, P extends Presenter<V>>
         extends Fragment implements PresenterDelegateCallback<V, P> {
 
     private static final int LOADER_ID = 101;
-    private final FragmentPresenterDelegate<V, P> mDelegate = new
-            FragmentPresenterDelegate<>(this /* Callback */, this /* Fragment */, LOADER_ID);
+    private FragmentPresenterDelegate<V, P> mDelegate;
+    private P mPresenter;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mDelegate.onActivityCreated();
+        getMvpDelegate().onActivityCreated();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        mDelegate.onStop();
+        getMvpDelegate().onStop();
+    }
+
+    /**
+     * @return The {@link FragmentPresenterDelegateImpl} being used by this Fragment.
+     */
+    @NonNull
+    public FragmentPresenterDelegate<V, P> getMvpDelegate() {
+        if (mDelegate == null) {
+            mDelegate = new FragmentPresenterDelegateImpl<>(this /* Fragment */, LOADER_ID, this /* Callback */);
+        }
+        return mDelegate;
+    }
+
+    /**
+     * Returns current presenter.
+     *
+     * @return the presenter
+     */
+    protected P getPresenter() {
+        return mPresenter;
+    }
+
+    @Override
+    public void onPresenterReady(P presenter) {
+        mPresenter = presenter;
     }
 
     // Override in case of fragment not implementing Presenter<View> interface

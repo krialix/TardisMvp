@@ -17,7 +17,7 @@
 package com.krialix.tardis;
 
 /**
- * The interface {@link MvpView}.
+ * The base interface for every MvpView.
  */
 public interface MvpView {
 }

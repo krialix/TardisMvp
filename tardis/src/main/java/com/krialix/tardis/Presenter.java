@@ -18,8 +18,6 @@ package com.krialix.tardis;
 
 /**
  * The base interface for every presenter.
- *
- * @author Yasin Sinan Kayacan
  */
 public interface Presenter<V extends MvpView> {
     /**
